@@ -1,0 +1,36 @@
+<div class="sidebar-wrapper">
+    <div class="sidebar sidebar-collapse" id="sidebar">
+      <div class="sidebar__menu-group">
+        <ul class="sidebar_nav">
+          <li class="">
+            <a href="/" class="<%= path==='/' && 'active' %> ">
+              <span class="nav-icon uil uil-create-dashboard"></span>
+              <span class="menu-text">Dashboard</span>
+            </a>
+          </li>
+
+          <li class="">
+            <a href="/users_list" class="<%= path==='/users_list' && 'active' %> ">
+              <span class="nav-icon uil uil-users-alt"></span>
+              <span class="menu-text">Users</span>
+              <span class="toggle-icon"></span>
+            </a>
+          </li>
+          <li class="">
+            <a href="/instructors_list" class="<%= path==='/instructors_list' && 'active' %> ">
+              <span class="nav-icon uil uil-user-md"></span>
+              <span class="menu-text">Instructors</span>
+              <span class="toggle-icon"></span>
+            </a>
+          </li>
+
+          <li class="">
+            <a href="/banners"  class="<%= path==='/banners' && 'active' %> ">
+              <span class="nav-icon uil uil-image"></span>
+              <span class="menu-text">Banners</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
