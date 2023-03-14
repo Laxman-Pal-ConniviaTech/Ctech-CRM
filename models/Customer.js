@@ -2,29 +2,25 @@ const { DataTypes } = require("sequelize");
 
 const sequelize = require("../utils/database");
 
-const User = sequelize.define(
-  "user",
+const Customer = sequelize.define(
+  "customer",
   {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true
     },
+    name: {
+      type: DataTypes.STRING,
+    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    name: {
-      type: DataTypes.STRING,
-    },
     mobile: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
     },
-    compname: {
+    comp_name: {
       type: DataTypes.STRING,
     },
     address: {
@@ -36,27 +32,20 @@ const User = sequelize.define(
     pincode: {
       type: DataTypes.INTEGER,
     },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     roleId: {
       type: DataTypes.TINYINT,
+      defaultValue: 2,
     },
     ban : {
       type : DataTypes.TINYINT,
-      default : 0
-    },
-    deletedAt: {
-      field: "deleted_at",
-      type: DataTypes.DATE,
-    },
-    createdAt: {
-      field: "created_at",
-      type: DataTypes.DATE,
-    },
-    updatedAt: {
-      field: "updated_at",
-      type: DataTypes.DATE,
-    },
+      defaultValue: 0,
+    }
   },
   { paranoid: true, timestamps: true }
 );
 
-module.exports = User;
+module.exports = Customer;
