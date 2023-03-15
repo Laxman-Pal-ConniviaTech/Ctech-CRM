@@ -10,15 +10,30 @@ const Customer = sequelize.define(
       autoIncrement: true,
       primaryKey: true
     },
+    cust_uni_id :{
+      type:DataTypes.STRING,
+      allowNull: false,
+    },
     name: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    mobile: {
+    phone_1: {
       type: DataTypes.BIGINT,
+      allowNull : false
+    },
+    phone_2: {
+      type: DataTypes.STRING,
+    },
+    phone_3: {
+      type: DataTypes.STRING,
+    },
+    phone_4: {
+      type: DataTypes.STRING,
     },
     comp_name: {
       type: DataTypes.STRING,

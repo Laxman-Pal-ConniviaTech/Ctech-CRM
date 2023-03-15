@@ -16,7 +16,7 @@
                 class="d-flex align-items-center user-member__title justify-content-center me-sm-25"
               >
                 <h4 class="text-capitalize fw-500 breadcrumb-title">
-                  users list datatable
+                  Customer list datatable
                 </h4>
                 <span class="sub-title ms-sm-25 ps-sm-25">Home</span>
               </div>
@@ -57,6 +57,9 @@
                       <span class="userDatatable-title">Sr No</span>
                     </th>
                     <th>
+                      <span class="userDatatable-title">Unique Id</span>
+                    </th>
+                    <th>
                       <span class="userDatatable-title">Customer Name</span>
                     </th>
                     <th>
@@ -67,9 +70,6 @@
                     </th>
                     <th>
                       <span class="userDatatable-title">Company Name</span>
-                    </th>
-                    <th>
-                      <span class="userDatatable-title">Address</span>
                     </th>
                     <th>
                       <span class="userDatatable-title">City</span>
@@ -98,6 +98,11 @@
                     </td>
                     <td>
                       <div class="userDatatable-content">
+                       <%= customer.cust_uni_id %>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="userDatatable-content">
                        <%= customer.name %>
                       </div>
                     </td>
@@ -107,16 +112,11 @@
                       </div>
                     </td>
                     <td>
-                      <div class="userDatatable-content"><%= customer.mobile %></div>
+                      <div class="userDatatable-content"><%= customer.phone_1 %></div>
                     </td>
                     <td>
                       <div class="userDatatable-content">
                         <%= customer.comp_name %>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="userDatatable-content d-inline-block">
-                        <%= customer.address %>
                       </div>
                     </td>
                     <td>
@@ -138,18 +138,18 @@
                       <ul
                         class="orderDatatable_actions mb-0 d-flex flex-wrap"
                       >
+                      <li>
+                        <a href="cust_details/<%= customer.id %>" class="view">
+                          <i class="uil uil-eye"></i>
+                        </a>
+                      </li>
                         <li>
-                          <a href="/user_details/" class="view">
-                            <i class="uil uil-eye"></i>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="/edit-user/" class="edit">
+                          <a href="edit-customer/<%= customer.id %>" class="edit">
                             <i class="uil uil-edit"></i>
                           </a>
                         </li>
                         <li>
-                          <a href="/remove-user/" class="remove">
+                          <a href="remove-customer/<%= customer.id %>" class="remove">
                             <i class="uil uil-trash-alt"></i>
                           </a>
                         </li>

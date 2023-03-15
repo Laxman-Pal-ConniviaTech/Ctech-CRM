@@ -3,6 +3,8 @@ const path = require("path");
 const Customer = require("./models/Customer");
 const Domains = require("./models/Domains");
 const HostingProvider = require("./models/HostingProvider")
+const Services = require("./models/Services")
+const Hostings = require("./models/Hostings")
 const sequelize = require("./utils/database");
 const bodyParser = require("body-parser");
 
@@ -21,6 +23,8 @@ const port = process.env.PORT || 3000;
 
 Customer.hasMany(Domains);
 Domains.belongsTo(Customer);
+Customer.hasMany(Hostings);
+Hostings.belongsTo(Customer);
 
 sequelize
   .sync()

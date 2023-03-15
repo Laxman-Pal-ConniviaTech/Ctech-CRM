@@ -16,7 +16,7 @@
                 class="d-flex align-items-center user-member__title justify-content-center me-sm-25"
               >
                 <h4 class="text-capitalize fw-500 breadcrumb-title">
-                  users list datatable
+                  Services list
                 </h4>
                 <span class="sub-title ms-sm-25 ps-sm-25">Home</span>
               </div>
@@ -34,13 +34,27 @@
               </form>
             </div>
             <div class="action-btn">
-              <a
-                href="#"
+              <a id="add_service"
                 class="btn px-15 btn-primary"
               >
-              <i class="uil uil-plus"></i>Add Provider</a
+              <i class="uil uil-plus"></i>Add Service</a
               >
             </div>
+          </div>
+          <div id="add_service_form" style="display: none;" class="col-md-6 mb-25">
+            <form action="/admin/add-services" method="post">
+              <input type="text" name="service_name" class="form-control ih-medium ip-gray radius-xs b-light px-15" placeholder="Service Name">
+              <div class="col-md-6">
+                <div class="layout-button mt-0">
+                  <button id="cancel" type="button" class="btn border border-dark btn-default btn-squared btn-light px-20">
+                    cancel
+                  </button>
+                  <button class="btn btn-primary btn-default btn-squared px-30">
+                    save
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -57,13 +71,13 @@
                       <span class="userDatatable-title">Sr No</span>
                     </th>
                     <th>
-                      <span class="userDatatable-title">	Hostprovider Name</span>
+                      <span class="userDatatable-title">	Service Name</span>
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <% let srNo = 1; %>
-                 <% for (let provider of providers ) { %>
+                 <% for (let service of services ) { %>
                   <tr>
                     <td>
                       <div class="userDatatable-content">
@@ -72,7 +86,7 @@
                     </td>
                     <td>
                       <div class="userDatatable-content">
-                        <%= provider.hosting_provider_name %>
+                        <%= service.service_name %>
                       </div>
                     </td>
                   </tr>
@@ -80,51 +94,6 @@
                 </tbody>
               </table>
             </div>
-            <!-- <div class="d-flex justify-content-end pt-30">
-              <nav class="dm-page">
-                <ul class="dm-pagination d-flex">
-                  <li class="dm-pagination__item">
-                    <a
-                      href="#"
-                      class="dm-pagination__link pagination-control"
-                      ><span class="la la-angle-left"></span
-                    ></a>
-                    <a href="/users_list/?page=1" class="dm-pagination__link"
-                      ><span class="page-number">1</span></a
-                    >
-                    <a href="/users_list/?page=2" class="dm-pagination__link active"
-                      ><span class="page-number">2</span></a
-                    >
-                    <a href="#" class="dm-pagination__link"
-                      ><span class="page-number">3</span></a
-                    >
-                    <a
-                      href="#"
-                      class="dm-pagination__link pagination-control"
-                      ><span class="page-number">...</span></a
-                    >
-                    <a href="#" class="dm-pagination__link"
-                      ><span class="page-number">12</span></a
-                    >
-                    <a
-                      href="#"
-                      class="dm-pagination__link pagination-control"
-                      ><span class="la la-angle-right"></span
-                    ></a>
-                    <a href="#" class="dm-pagination__option"> </a>
-                  </li>
-                  <li class="dm-pagination__item">
-                    <div class="paging-option">
-                      <select name="page-number" class="page-selection">
-                        <option value="20">20/page</option>
-                        <option value="40">40/page</option>
-                        <option value="60">60/page</option>
-                      </select>
-                    </div>
-                  </li>
-                </ul>
-              </nav>
-            </div> -->
           </div>
         </div>
       </div>
@@ -137,4 +106,16 @@
 $(document).ready(function () {
     $('#datatables').DataTable();
 });
+
+const add_service_form = document.getElementById("add_service_form")
+const cancel = document.getElementById("cancel")
+
+document.getElementById("add_service").addEventListener("click" , function () {
+  add_service_form.style.display = "block"
+})
+
+cancel.addEventListener("click" , function(){
+  add_service_form.style.display = "none"
+})
+
   </script>
