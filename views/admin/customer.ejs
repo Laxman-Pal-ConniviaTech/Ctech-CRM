@@ -1,7 +1,7 @@
-<%- include("./includes/head.ejs") %>
+<%- include("../includes/head.ejs") %>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/dataTables.bootstrap4.min.css">
-<%- include("./includes/header.ejs") %>
-<%- include("./includes/sidebar.ejs") %>
+<%- include("../includes/header.ejs") %>
+<%- include("../includes/sidebar.ejs") %>
 <div class="contents">
     <div class="container-fluid">
       <div class="row">
@@ -16,29 +16,17 @@
                 class="d-flex align-items-center user-member__title justify-content-center me-sm-25"
               >
                 <h4 class="text-capitalize fw-500 breadcrumb-title">
-                  users list datatable
+                  Customer list 
                 </h4>
-                <span class="sub-title ms-sm-25 ps-sm-25">Home</span>
+                
               </div>
-              <form
-                action="https://demo.dashboardmarket.com/"
-                class="d-flex align-items-center user-member__form my-sm-0 my-2"
-              >
-                <img src="img/svg/search.svg" alt="search" class="svg" />
-                <input
-                  class="form-control me-sm-2 border-0 box-shadow-none"
-                  type="search"
-                  placeholder="Search by Name"
-                  aria-label="Search"
-                />
-              </form>
             </div>
             <div class="action-btn">
               <a
-                href="#"
+                href="/admin/add-customer"
                 class="btn px-15 btn-primary"
               >
-              <i class="uil uil-plus"></i>Add Provider</a
+              <i class="uil uil-plus"></i>Add Customer</a
               >
             </div>
           </div>
@@ -57,13 +45,39 @@
                       <span class="userDatatable-title">Sr No</span>
                     </th>
                     <th>
-                      <span class="userDatatable-title">	Hostprovider Name</span>
+                      <span class="userDatatable-title">Unique Id</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Customer Name</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Email</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Mobile</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Company Name</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">City</span>
+                    </th>
+                    <th>
+                        <span class="userDatatable-title">Pin Code</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Created On</span>
+                  </th>
+                    <th>
+                      <span class="userDatatable-title float-end"
+                        >action</span
+                      >
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <% let srNo = 1; %>
-                 <% for (let provider of providers ) { %>
+                  <% for (let customer of customers) { %>
                   <tr>
                     <td>
                       <div class="userDatatable-content">
@@ -72,8 +86,62 @@
                     </td>
                     <td>
                       <div class="userDatatable-content">
-                        <%= provider.hosting_provider_name %>
+                       <%= customer.cust_uni_id %>
                       </div>
+                    </td>
+                    <td>
+                      <div class="userDatatable-content">
+                       <%= customer.name %>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="userDatatable-content">
+                        <%= customer.email %>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="userDatatable-content"><%= customer.phone_1 %></div>
+                    </td>
+                    <td>
+                      <div class="userDatatable-content">
+                        <%= customer.comp_name %>
+                      </div>
+                    </td>
+                    <td>
+                        <div class="userDatatable-content d-inline-block">
+                          <%= customer.city %>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="userDatatable-content d-inline-block">
+                          <%= customer.pincode %>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="userDatatable-content d-inline-block">
+                          <%= new Date(customer.createdAt).toLocaleDateString('en-US') %>
+                        </div>
+                      </td>
+                    <td>
+                      <ul
+                        class="orderDatatable_actions mb-0 d-flex flex-wrap"
+                      >
+                      <li>
+                        <a href="cust_details/<%= customer.id %>" class="view">
+                          <i class="uil uil-eye"></i>
+                        </a>
+                      </li>
+                        <li>
+                          <a href="edit-customer/<%= customer.id %>" class="edit">
+                            <i class="uil uil-edit"></i>
+                          </a>
+                        </li>
+                        <li>
+                          <a href="remove-customer/<%= customer.id %>" class="remove">
+                            <i class="uil uil-trash-alt"></i>
+                          </a>
+                        </li>
+                      </ul>
                     </td>
                   </tr>
                   <% } %>
@@ -130,7 +198,7 @@
       </div>
     </div>
   </div>
-  <%- include("./includes/footer.ejs") %>
+  <%- include("../includes/footer.ejs") %>
   <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.3/js/dataTables.bootstrap4.min.js"></script>
   <script>

@@ -1,5 +1,5 @@
-<%- include("./includes/head.ejs") %> <%- include("./includes/header.ejs") %>
-<%- include("./includes/sidebar.ejs") %>
+<%- include("../includes/head.ejs") %> <%- include("../includes/header.ejs") %>
+<%- include("../includes/sidebar.ejs") %>
 <div class="contents">
   <div class="demo2 mb-25 t-thead-bg">
     <div class="container-fluid">
@@ -116,7 +116,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-6 mb-30">
+        <div class="col-xxl-6 col-lg-12 mb-30">
           <div class="support-ticket-system support-ticket-system--search">
             <div
               class="breadcrumb-main m-0 breadcrumb-main--table justify-content-sm-between"
@@ -201,7 +201,7 @@
             </div>
           </div>
         </div>
-        <div class="col-6 mb-30">
+        <div class="col-xxl-6 col-lg-12 mb-30">
           <div class="support-ticket-system support-ticket-system--search">
             <div
               class="breadcrumb-main m-0 breadcrumb-main--table justify-content-sm-between"
@@ -267,7 +267,7 @@
                         <div class="userDatatable-content d-inline-block">
 
                            <span
-                          class="bg-opacity-<%= days>0 ? "success" : "danger" %> color-<%= days>0 ? "success" : "danger" %> userDatatable-content-status active"
+                          class="bg-opacity-<%= days>=0 ? "success" : "danger" %> color-<%= days>=0 ? "success" : "danger" %> userDatatable-content-status active"
                           >
                           <%= days>0 ? "active" : "expired" %>
                           </span>
@@ -290,4 +290,4 @@
     </div>
   </div>
 </div>
-<%- include("./includes/footer.ejs") %>
+<%- include("../includes/footer.ejs") %>

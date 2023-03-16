@@ -54,8 +54,8 @@ h6 {
 
 .btn-primary {
     color: var(--color-white);
-    background-color: var(--color-primary);
-    border-color: var(--color-primary)
+    background-color: #1ba4de;
+    border-color: #1ba4de
 }
 
 .circle-primary {
@@ -2561,8 +2561,8 @@ h6 {
 
 .btn-primary:hover {
     color: var(--color-white);
-    background-color: var(--bg-primary-hover) !important;
-    border-color: var(--bg-primary-hover)
+    background-color: #1492c7 !important;
+    border-color: #1492c7 
 }
 
 .btn-primary-hover {
@@ -29850,7 +29850,7 @@ body:after {
     font-size: 13px;
     line-height: 1.6923076923;
     font-weight: 400;
-    color: var(--color-primary)
+    color: #1ba4de
 }
 
 .admin-condition .custom-checkbox .checkbox-text {
@@ -30094,7 +30094,7 @@ body:after {
 }
 
 .edit-profile__body .form-group .form-control:hover {
-    border-color: var(--color-primary)
+    border-color: #1ba4de
 }
 
 .edit-profile__body .form-group textarea.form-control {

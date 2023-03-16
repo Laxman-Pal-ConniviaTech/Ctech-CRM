@@ -9,36 +9,67 @@ const Hostings = require("../models/Hostings");
 exports.getDashboard = async (req, res) => {
   const totalDomains = await Domains.count();
   const totalCust = await Customer.count();
-  const today = new Date();
-const nextMonth = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 30);
+//   const today = new Date();
+// const nextMonth = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 30);
 
+// const domains = await Domains.findAll({
+//   where: {
+//     expire_date: {
+//       [Op.gte]: today.toISOString().substring(0, 19).replace('T', ' '),
+//       [Op.lte]: nextMonth.toISOString().substring(0, 19).replace('T', ' ')
+//     }
+//   },
+//   include:[{
+//     model : Customer
+//   }]
+// });
+
+const today = new Date();
+const thirtyDaysFromNow = new Date(today.getTime() + (30 * 24 * 60 * 60 * 1000));
 const domains = await Domains.findAll({
   where: {
     expire_date: {
-      [Op.gte]: today.toISOString().substring(0, 19).replace('T', ' '),
-      [Op.lte]: nextMonth.toISOString().substring(0, 19).replace('T', ' ')
+      [Op.lte]: thirtyDaysFromNow
     }
   },
-  include:[{
-    model : Customer
-  }]
-});
+    include:[{
+      model : Customer
+    }],
+    order: [
+      [ "expire_date" , 'ASC']
+  ]
+})
+
 
 const hostings = await Hostings.findAll({
   where: {
     expire_date: {
-      [Op.gte]: today.toISOString().substring(0, 19).replace('T', ' '),
-      [Op.lte]: nextMonth.toISOString().substring(0, 19).replace('T', ' ')
+      [Op.lte]: thirtyDaysFromNow
     }
   },
-  include: [{
-    model: Customer
-  }]
-});
+    include:[{
+      model : Customer
+    }],
+    order: [
+      [ "expire_date" , 'ASC']
+  ]
+})
+
+// const hostings = await Hostings.findAll({
+//   where: {
+//     expire_date: {
+//       [Op.gte]: today.toISOString().substring(0, 19).replace('T', ' '),
+//       [Op.lte]: nextMonth.toISOString().substring(0, 19).replace('T', ' ')
+//     }
+//   },
+//   include: [{
+//     model: Customer
+//   }]
+// });
 
 // res.send(domains)
 
-  res.render("dashboard", {
+  res.render("admin/dashboard", {
     path: "/admin/",
     totalDomains: totalDomains,
     totalCust: totalCust,
@@ -49,7 +80,7 @@ const hostings = await Hostings.findAll({
 
 exports.getCustomer = (req, res) => {
   Customer.findAll().then((customers) => {
-    res.render("customer", { path: "/admin/customers", customers: customers });
+    res.render("admin/customer", { path: "/admin/get-customers", customers: customers });
   });
 };
 
@@ -59,7 +90,7 @@ exports.getCustDetails = async (req, res) => {
   const services = await Services.findAll();
 
   if (cust) {
-    res.render("cust-details", {
+    res.render("admin/cust-details", {
       path: "/admin/cust_details",
       customer: cust,
       services: services,
@@ -68,7 +99,7 @@ exports.getCustDetails = async (req, res) => {
 };
 
 exports.getAddCustomer = (req, res) => {
-  res.render("add-customer", { path: "/add-customer" });
+  res.render("admin/add-customer", { path: "/add-customer" });
 };
 
 exports.AddCustomer = async (req, res) => {
@@ -91,7 +122,7 @@ exports.AddCustomer = async (req, res) => {
     });
 
     if (newCust) {
-      res.redirect("/admin/customers");
+      res.redirect("/admin/get-customers");
     }
   } catch (error) {
     console.log(error);
@@ -100,7 +131,7 @@ exports.AddCustomer = async (req, res) => {
 
 exports.getEditCustomer = async (req, res) => {
   const customer = await Customer.findByPk(req.params.id);
-  res.render("edit-customer", {
+  res.render("admin/edit-customer", {
     path: "/admin/edit-customer",
     customer: customer,
   });
@@ -122,7 +153,7 @@ exports.editCustomer = (req, res) => {
       return cust.save();
     })
     .then((result) => {
-      res.redirect("/admin/customers");
+      res.redirect("/admin/get-customers");
     });
 };
 
@@ -131,7 +162,7 @@ exports.removeCust = async (req, res) => {
     const deleted = await Customer.destroy({ where: { id: req.params.id } });
 
     if (deleted) {
-      res.redirect("/admin/customers");
+      res.redirect("/admin/get-customers");
     }
   } catch (error) {
     console.log(error);
@@ -166,7 +197,7 @@ exports.getDomain = async (req, res) => {
   });
 
   // res.send(domains)
-  res.render("domains", { path: "/admin/domains", domains: domains });
+  res.render("admin/domains", { path: "/admin/domains", domains: domains });
 };
 
 exports.getAddDomain = async (req, res) => {
@@ -175,7 +206,7 @@ exports.getAddDomain = async (req, res) => {
 
     const providers = await HostingProvider.findAll();
 
-    res.render("add-domain", {
+    res.render("admin/add-domain", {
       path: "/admin/add-domain",
       customers: customers,
       providers: providers,
@@ -239,7 +270,7 @@ exports.getAddHosting = async (req, res) => {
     const customers = await Customer.findAll({ where: { ban: 0 } });
 
     const providers = await HostingProvider.findAll();
-    res.render("add-hosting", {
+    res.render("admin/add-hosting", {
       path: "add-hosting",
       customers: customers,
       providers: providers,
@@ -254,7 +285,7 @@ exports.getAddHosting = async (req, res) => {
 exports.getHostProviders = async (req, res) => {
   const providers = await HostingProvider.findAll();
 
-  res.render("hosting_providers", {
+  res.render("admin/hosting_providers", {
     path: "/admin/host-providers",
     providers: providers,
   });
@@ -265,7 +296,7 @@ exports.getHostProviders = async (req, res) => {
 exports.getServices = async (req, res) => {
   const services = await Services.findAll();
 
-  res.render("services", { path: "/admin/services", services: services });
+  res.render("admin/services", { path: "/admin/services", services: services });
 };
 
 exports.addServices = async (req, res) => {
