@@ -34,13 +34,20 @@ app.set("view engine" , "ejs");
 app.set("views" , "views")
 
 
+
+
 // Routes
 app.use("/admin" , require("./routes/admin.routes"))
 app.use(require("./routes/auth.routes"));
 app.use("/customer" , require("./routes/customer.routes"))
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
+
+// app.use((req , res ,  next )=>{
+
+//   next();
+// })
 
 // Relations
 Customer.hasMany(Domains);

@@ -2,48 +2,51 @@ const express = require("express");
 const router = express.Router();
 const adminController = require("../controllers/admin.controllers");
 const Services = require("../models/Services");
-const isLogin = require("../middleware/auth.middleware")
-router.get("/", adminController.getDashboard);
+const authMiddleware = require("../middleware/auth.middleware")
 
 
-// Customer Routes
-router.get("/customers", isLogin , adminController.getCustomer);
 
-router.get("/add-customer"   , isLogin, adminController.getAddCustomer )
+// Admin Dash Board
+router.get("/" ,  authMiddleware.isAdmin , adminController.getDashboard);
 
-router.post("/add-customer"  , isLogin, adminController.AddCustomer)
+// Customers List Routes
+router.get("/customers" ,  authMiddleware.isAdmin, adminController.getCustomer);
 
-router.get("/edit-customer/:id"  , isLogin, adminController.getEditCustomer)
+router.get("/add-customer"   ,  authMiddleware.isAdmin, adminController.getAddCustomer )
 
-router.post("/edit-customer"  , isLogin, adminController.editCustomer)
+router.post("/add-customer"  ,  authMiddleware.isAdmin, adminController.AddCustomer)
 
-router.get("/cust_details/:id"  , isLogin, adminController.getCustDetails)
+router.get("/edit-customer/:id"  ,  authMiddleware.isAdmin, adminController.getEditCustomer)
 
-router.get("/remove-customer/:id"   , isLogin, adminController.removeCust)
+router.post("/edit-customer"  ,  authMiddleware.isAdmin, adminController.editCustomer)
 
-router.post("/add-service"   , isLogin, adminController.addService)
+router.get("/cust_details/:id"  ,  authMiddleware.isAdmin, adminController.getCustDetails)
+
+router.get("/remove-customer/:id"  ,  authMiddleware.isAdmin , adminController.removeCust)
+
+router.post("/add-service"   ,  authMiddleware.isAdmin, adminController.addService)
 
 // Domain Routes
 
-router.get("/domains"  , isLogin, adminController.getDomain);
+router.get("/domains"  ,  authMiddleware.isAdmin, adminController.getDomain);
 
-router.get("/add-domain"  , isLogin, adminController.getAddDomain )
+router.get("/add-domain"  ,  authMiddleware.isAdmin, adminController.getAddDomain )
 
-router.get("/add-hosting"  , isLogin, adminController.getAddHosting )
+router.get("/add-hosting" ,  authMiddleware.isAdmin , adminController.getAddHosting )
 
-router.post("/add-domain" , isLogin, adminController.AddDomain);
+router.post("/add-domain",  authMiddleware.isAdmin , adminController.AddDomain);
 
-router.post("/add-hosting" , isLogin, adminController.AddHosting);
+router.post("/add-hosting",  authMiddleware.isAdmin , adminController.AddHosting);
 
 // Hosting Provider Routes
 
-router.get("/host-providers", adminController.getHostProviders);
+router.get("/host-providers",  authMiddleware.isAdmin, adminController.getHostProviders);
 
 // Services 
 
-router.get("/services" , isLogin, adminController.getServices);
+router.get("/services" ,  authMiddleware.isAdmin, adminController.getServices);
 
-router.post("/add-services" , isLogin, adminController.addServices);
+router.post("/add-services" ,  authMiddleware.isAdmin, adminController.addServices);
 
 
 module.exports = router;

@@ -5999,14 +5999,14 @@ body.top-menu .navbar-left .customizer-trigger+.top-menu {
 
 .sidebar__menu-group ul.sidebar_nav li>a.active,
 .sidebar__menu-group ul.sidebar_nav li>a:hover {
-    color: var(--color-primary)
+    color:#1ba4de
 }
 
 .sidebar__menu-group ul.sidebar_nav li>a.active .nav-icon,
 .sidebar__menu-group ul.sidebar_nav li>a.active .toggle-icon,
 .sidebar__menu-group ul.sidebar_nav li>a:hover .nav-icon,
 .sidebar__menu-group ul.sidebar_nav li>a:hover .toggle-icon {
-    color: var(--color-primary)
+    color: #1ba4de
 }
 
 .sidebar__menu-group ul.sidebar_nav li.has-child ul {

@@ -1,5 +1,4 @@
 const bcrypt = require("bcrypt");
-const session = require("express-session");
 const Customer = require("../models/Customer");
 
 exports.getLogin = (req, res) => {
@@ -16,13 +15,14 @@ exports.login = async (req, res) => {
   if (cust) {
     if (cust.roleId == 1) {
       if (depass) {
-        req.session.cust = cust.id + cust.cust_uni_id;
+        req.session.role = 'admin';
+        req.session.custId = cust.id;
         return res.redirect("/admin/");
       }
     }
     if (cust.roleId == 2) {
       if (depass) {
-        req.session.cust = cust.id+cust.cust_uni_id ;
+        req.session.custId = cust.id;
         return res.redirect("/customer/");
       }
     }
@@ -31,9 +31,11 @@ exports.login = async (req, res) => {
   res.redirect("/");
 };
 
-exports.getLogout = (req , res)=>{
-    req.session.destroy((error)=>{
-       return res.redirect("/customer")
-       
-    })
-}
+exports.getLogout = (req, res) => {
+  req.session.destroy((error) => {
+    if (error) {
+      return console.log(error);
+    }
+    return res.redirect("/");
+  });
+};
