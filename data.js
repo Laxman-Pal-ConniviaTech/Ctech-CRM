@@ -1,23 +1,13 @@
-client_name": "",
-"mobile": "",
-"form": "",
-"to": "",
-"transport_type": "full load",
-"trans_charge": "",
-"packing_charge": "",
-"unpacking_charge": "",
-"loading_charge": "",
-"unloading_charge": "",
-"car_charge": "",
-"warehouse_charges": "",
-"st_charges": "",
-"mathadi_charges": "",
-"insurance_per": "",
-"Insurance_type": "",
-"gst_per": "",
-"gst_type": "",
-"gst_num": "",
-"shifting_date": "",
-"token_amt": "",
-"service_charge": "",
-"service_charge_type": ""
+
+gst_per : {
+    type:DataTypes.STRING,
+    allowNull:false
+},
+gst_type : {
+    type:DataTypes.STRING,
+    allowNull:false
+},
+gst_num : {
+    type:DataTypes.STRING,
+    allowNull:false
+},

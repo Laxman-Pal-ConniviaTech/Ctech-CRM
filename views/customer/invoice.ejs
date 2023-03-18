@@ -16,17 +16,17 @@
                 class="d-flex align-items-center user-member__title justify-content-center me-sm-25"
               >
                 <h4 class="text-capitalize fw-500 breadcrumb-title">
-                  Quotation list 
+                  Invoice list 
                 </h4>
                 
               </div>
             </div>
             <div class="action-btn">
               <a
-                href="/customer/add-quotation"
+                href="/customer/add-invoice"
                 class="btn px-15 btn-primary"
               >
-              <i class="uil uil-plus"></i>Add Quotation</a
+              <i class="uil uil-plus"></i>Add Invoice</a
               >
             </div>
           </div>
@@ -71,7 +71,7 @@
                 </thead>
                 <tbody>
                   <% let srNo = 1; %>
-                <% for(let quotation of quotations){ %>
+                <% for(let invoice of invoices){ %>
                   <tr>
                     <td>
                       <div class="userDatatable-content">
@@ -80,30 +80,30 @@
                     </td>
                     <td>
                       <div class="userDatatable-content">
-                       <%= quotation.client_name %>
+                       <%= invoice.client_name %>
                       </div>
                     </td>
                     <td>
                       <div class="userDatatable-content">
-                        <%= quotation.client_mobile  %>
+                        <%= invoice.client_mobile  %>
                       </div>
                     </td>
                     <td>
                       <div class="userDatatable-content">
-                        <%= new Date(quotation.createdAt).toDateString()  %>
+                        <%= new Date(invoice.createdAt).toDateString()  %>
                       </div>
                     </td>
                     <td>
-                      <div class="userDatatable-content"> <%= quotation.shift_from %></div>
+                      <div class="userDatatable-content"> <%= invoice.shift_from %></div>
                     </td>
                     <td>
                       <div class="userDatatable-content">
-                        <%= quotation.shift_to %>
+                        <%= invoice.shift_to %>
                       </div>
                     </td>
                     <td>
                         <div class="userDatatable-content d-inline-block">
-                          <%= quotation.transport_charge  %> Rs
+                          <%= invoice.transport_charge  %> Rs
                         </div>
                       </td>
                     <td>
@@ -111,13 +111,13 @@
                         class="orderDatatable_actions mb-0 d-flex flex-wrap"
                       >
                       <li>
-                        <a href="downlaod_quotation/<%= quotation.id %>" class="view mx-2 border-0 btn-primary wh-50 p-10 rounded-circle" target="_blank">
+                        <a href="downlaod_invoice/<%= invoice.id %>" class="view mx-2 border-0 btn-primary wh-50 p-10 rounded-circle" target="_blank">
                           <i class="text-white uil uil-import"></i>
                         </a>
                       </li>
                           
                         <li>
-                          <a href="remove-quotation/<%= quotation.id %>" class="remove border-0 btn-danger wh-50 p-10 rounded-circle">
+                          <a href="remove-invoice/<%= invoice.id %>" class="remove border-0 btn-danger wh-50 p-10 rounded-circle">
                             <i class="text-white uil uil-trash-alt"></i>
                           </a>
                         </li>

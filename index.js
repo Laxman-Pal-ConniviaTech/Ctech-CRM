@@ -8,8 +8,11 @@ const Hostings = require("./models/Hostings")
 const sequelize = require("./utils/database");
 const bodyParser = require("body-parser");
 const Quotation = require("./models/Quotation")
-const session = require('express-session')
+const session = require('express-session');
+const Invoice = require("./models/Invoice");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
+
+
 
 const app = express();
 
@@ -33,7 +36,15 @@ app.use(express.static(path.join(__dirname , "public")))
 app.set("view engine" , "ejs");
 app.set("views" , "views")
 
-
+app.use((req, res, next) => {
+  Customer.findByPk(req.session.custId)
+    .then(cust => {
+      req.cust = cust;
+      // console.log(user);
+      next();
+    })
+    .catch(err => console.log(err));
+});
 
 
 // Routes
@@ -56,6 +67,8 @@ Customer.hasMany(Hostings);
 Hostings.belongsTo(Customer);
 Customer.hasMany(Quotation);
 Quotation.belongsTo(Customer);
+Customer.hasMany(Invoice);
+Invoice.belongsTo(Customer);
 
 // Sequelize Sync
 sequelize

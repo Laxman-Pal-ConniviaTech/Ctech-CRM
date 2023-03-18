@@ -2,7 +2,7 @@ const {DataTypes} = require("sequelize")
 
 const sequelize = require("../utils/database")
 
-const Quotation = sequelize.define("quotation" , {
+const Invoice = sequelize.define("invoice" , {
     id:{
         type:DataTypes.INTEGER,
         primaryKey:true,
@@ -78,18 +78,7 @@ const Quotation = sequelize.define("quotation" , {
         type:DataTypes.STRING,
         allowNull:false
     },
-    gst_per : {
-        type:DataTypes.STRING,
-        allowNull:false
-    },
-    gst_type : {
-        type:DataTypes.STRING,
-        allowNull:false
-    },
-    gst_num : {
-        type:DataTypes.STRING,
-        allowNull:false
-    },
+
     shifting_date : {
         type:DataTypes.DATEONLY,
         allowNull:false
@@ -106,9 +95,25 @@ const Quotation = sequelize.define("quotation" , {
         type:DataTypes.STRING,
         allowNull:false
     },
-    quotation_color:{
+    cgst_per : {
+        type:DataTypes.STRING,
+        allowNull:false
+    },
+    cgst_num : {
+        type:DataTypes.STRING,
+        allowNull:false
+    },
+    sgst_per : {
+        type:DataTypes.STRING,
+        allowNull:false
+    },
+    sgst_num : {
+        type:DataTypes.STRING,
+        allowNull:false
+    },
+    invoice_color:{
         type:DataTypes.STRING,
     }
 } , { paranoid: true, timestamps: true })
 
-module.exports = Quotation;
+module.exports = Invoice;
