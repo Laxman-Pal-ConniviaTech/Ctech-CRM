@@ -96,7 +96,7 @@
         <li class="">
           <a
             href="/customer/myTransaction"
-            class="<%= path==='/admin/customers' && 'active' %>"
+            class="<%= path==='customer/myTransaction' && 'active' %>"
           >
             <span class="nav-icon uil uil-transaction"></span>
             <span class="menu-text">Transactions</span>
@@ -105,7 +105,7 @@
         <li class="">
           <a
             href="/customer/myQuotations"
-            class="<%= path==='/admin/domains' && 'active' %>"
+            class="<%= path==='customer/myQuotations' && 'active' %>"
           >
             <span class="nav-icon uil uil-clipboard-alt"></span>
             <span class="menu-text">Quotation</span>
@@ -115,10 +115,19 @@
         <li class="">
           <a
             href="/customer/myInvoice"
-            class="<%= path==='/admin/host-providers' && 'active' %>"
+            class="<%= path==='customer/myInvoice' && 'active' %>"
+          >
+            <span class="nav-icon uil uil-receipt"></span>
+            <span class="menu-text">Invoice</span>
+          </a>
+        </li>
+        <li class="">
+          <a
+            href="/customer/moneyReceipt"
+            class="<%= path==='customer/moneyReceipt' && 'active' %>"
           >
             <span class="nav-icon uil uil-bill"></span>
-            <span class="menu-text">Invoice</span>
+            <span class="menu-text">Money Receipt</span>
           </a>
         </li>
         <li class="has-child">
@@ -131,10 +140,10 @@
           </a>
           <ul style="display: none; top: 338.484px; left: 214px">
             <li class="">
-              <a href="/customer/quotation_setting">Quotation</a>
+              <a href="/customer/logo">Logo</a>
             </li>
             <li class="">
-              <a href="/customer/invoice_setting">Invoice</a>
+              <a href="/customer/bankDetails">Bank Details</a>
             </li>
           </ul>
         </li>

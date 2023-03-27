@@ -1,13 +1,1 @@
-
-gst_per : {
-    type:DataTypes.STRING,
-    allowNull:false
-},
-gst_type : {
-    type:DataTypes.STRING,
-    allowNull:false
-},
-gst_num : {
-    type:DataTypes.STRING,
-    allowNull:false
-},
+{"cookie":{"originalMaxAge":null,"expires":null,"httpOnly":true,"path":"/"},"custId":42}

@@ -10,7 +10,7 @@ exports.generatePDF = async (res, template, data , pdfName) => {
     // await page.setDefaultNavigationTimeout(60000);
 
     const pdf = await page.pdf({
-      format: "Letter",
+      format: "letter",
       printBackground: true,
     });
 

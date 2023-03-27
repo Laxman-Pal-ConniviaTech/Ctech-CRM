@@ -12,7 +12,7 @@ const HostingProvider = sequelize.define(
     },
     hosting_provider_name :{
         type:DataTypes.STRING,
-        allowNull : false
+        allowNull : true
     }
   },
   { paranoid: true, timestamps: true }

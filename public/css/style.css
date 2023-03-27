@@ -12608,7 +12608,7 @@ body.top-menu .navbar-left .customizer-trigger+.top-menu {
     border-bottom: none;
     padding: 10px 20px;
     vertical-align: middle;
-    white-space: nowrap
+    /* white-space: nowrap */
 }
 
 .userDatatable table thead tr:not(.footable-filtering) {

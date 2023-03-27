@@ -16,43 +16,43 @@ const Hostings =  sequelize.define("hosting" , {
     },
     hosting_name:{
         type:DataTypes.STRING,
-        allowNull : false
+        allowNull : true
     },
     booked_from:{
         type:DataTypes.STRING,
-        allowNull : false
+        allowNull : true
     },
     hosting_mailId:{
         type:DataTypes.STRING,
-        allowNull : false
+        allowNull : true
     },
     hosting_password:{
         type:DataTypes.STRING,
-        allowNull : false
+        allowNull : true
     },
     hosting_pin:{
         type:DataTypes.STRING,
-        allowNull : false
+        allowNull : true
     },
     registration_Date:{
         type:DataTypes.DATE,
-        allowNull : false
+        allowNull : true
     },
     expire_date:{
         type:DataTypes.DATE,
-        allowNull : false
+        allowNull : true
     },
     remark:{
         type:DataTypes.STRING,
-        allowNull : false
+        allowNull : true
     },
     hosting_amount:{
         type:DataTypes.STRING,
-        allowNull : false
+        allowNull : true
     },
     hosting_provider:{
         type:DataTypes.STRING,
-        allowNull : false
+        allowNull : true
     }
 
 

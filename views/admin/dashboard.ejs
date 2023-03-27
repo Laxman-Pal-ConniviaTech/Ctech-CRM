@@ -159,14 +159,19 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <% for(let domain of domains){ %>
-                      <% const days = Math.floor((new Date(domain.expire_date).getTime() - new Date().getTime()) / (1000*60*60*24)) %>
+                    <% let srNo = 1; %>
+                    <% for(var i=0; i<domains.length; i++) { %>
+                      <% const days = Math.floor((new Date(domains[i].expire_date).getTime() - new Date().getTime()) / (1000*60*60*24)) %>
                     <tr>
-                      <td>#01</td>
+                      <td>
+                        <div class="userDatatable-content">
+                          <%= srNo++ %>
+                        </div>
+                      </td>
                       <td>
                         <div class="d-flex">
                           <div class="userDatatable-inline-title">
-                            <h6><%= domain.customer.name %></h6>
+                            <h6><%= console.log(domains[i])  %></h6>
                           </div>
                         </div>
                       </td>
@@ -190,7 +195,7 @@
                       </td>
                       <td>
                         <div class="userDatatable-content--priority">
-                          <%= domain.expire_date.toLocaleDateString() %>
+                          <%= domains[i].expire_date.toLocaleDateString() %>
                         </div>
                       </td>
                     </tr>

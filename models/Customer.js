@@ -8,23 +8,24 @@ const Customer = sequelize.define(
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
-      primaryKey: true
+      primaryKey: true,
+      allowNull: false,
     },
     cust_uni_id :{
       type:DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     phone_1: {
       type: DataTypes.BIGINT,
-      allowNull : false
+      allowNull : true
     },
     phone_2: {
       type: DataTypes.STRING,
@@ -49,7 +50,7 @@ const Customer = sequelize.define(
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     roleId: {
       type: DataTypes.TINYINT,

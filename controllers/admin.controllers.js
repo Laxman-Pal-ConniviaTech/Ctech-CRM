@@ -5,6 +5,10 @@ const HostingProvider = require("../models/HostingProvider");
 const bcrypt = require("bcrypt");
 const Services = require("../models/Services");
 const Hostings = require("../models/Hostings");
+const Quotation = require("../models/Quotation");
+const fs = require("fs");
+const getPDF = require("../utils/getPDF");
+const Invoice = require("../models/Invoice");
 
 exports.getDashboard = async (req, res) => {
   const totalDomains = await Domains.count();
@@ -80,7 +84,7 @@ const hostings = await Hostings.findAll({
 
 exports.getCustomer = (req, res) => {
   Customer.findAll().then((customers) => {
-    res.render("admin/customer", { path: "/admin/get-customers", customers: customers });
+    res.render("admin/customer", { path: "/admin/customers", customers: customers });
   });
 };
 
@@ -99,7 +103,7 @@ exports.getCustDetails = async (req, res) => {
 };
 
 exports.getAddCustomer = (req, res) => {
-  res.render("admin/add-customer", { path: "/add-customer" });
+  res.render("admin/add-customer", { path: "admin/add-customer" });
 };
 
 exports.AddCustomer = async (req, res) => {
@@ -122,7 +126,7 @@ exports.AddCustomer = async (req, res) => {
     });
 
     if (newCust) {
-      res.redirect("/admin/get-customers");
+      res.redirect("/admin/customers");
     }
   } catch (error) {
     console.log(error);
@@ -153,7 +157,7 @@ exports.editCustomer = (req, res) => {
       return cust.save();
     })
     .then((result) => {
-      res.redirect("/admin/get-customers");
+      res.redirect("/admin/customers");
     });
 };
 
@@ -162,7 +166,7 @@ exports.removeCust = async (req, res) => {
     const deleted = await Customer.destroy({ where: { id: req.params.id } });
 
     if (deleted) {
-      res.redirect("/admin/get-customers");
+      res.redirect("/admin/customers");
     }
   } catch (error) {
     console.log(error);
@@ -312,3 +316,126 @@ exports.addServices = async (req, res) => {
     console.log(error);
   }
 };
+
+
+
+// All Quotations 
+
+exports.getAllQuotations = async (req, res) => {
+  const allQuotations = await Quotation.findAll();
+
+  res.render("admin/quotations" , {path : "admin/quotation" , allQuotations : allQuotations})
+}
+
+
+exports.downloadQuotation = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const quotation_details = await Quotation.findByPk(id);
+    if (id) {
+      const template = fs.readFileSync("views/pdf/quotation.ejs", "utf-8");
+      const tatalCost =
+        Number(quotation_details.packing_charges) +
+        Number(quotation_details.loading_charges) +
+        Number(quotation_details.unloading_charges) +
+        Number(quotation_details.unpacking_charges);
+      const data = {
+        packing_charges: quotation_details.packing_charges,
+        loading_charges: quotation_details.loading_charges,
+        unloading_charges: quotation_details.unloading_charges,
+        unpacking_charges: quotation_details.unpacking_charges,
+        tableHeadColor: quotation_details.quotation_color,
+        client_name: quotation_details.client_name,
+        createdAt: quotation_details.createdAt,
+        client_mobile: quotation_details.client_mobile,
+        shift_from: quotation_details.shift_from,
+        shift_to: quotation_details.shift_to,
+        shifting_date: quotation_details.shifting_date,
+        token_amt: quotation_details.token_amt,
+        totalCost: tatalCost,
+      };
+      await getPDF.generatePDF(res, template, data , id);
+      return;
+    }
+
+    res.redirect("/admin/quotation");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.removeQuotation = async (req, res) => {
+  try {
+    const id = req.params.id;
+  
+    const quotationDestroyed = await Quotation.destroy({where:{id : id}})
+  
+    res.redirect("/admin/quotation");
+  } catch (error) {
+    console.log(error);
+  }
+  
+  };
+
+
+
+  // Invoices
+
+  exports.getAllInvoice = async (req , res )=>{
+    const invoices = await Invoice.findAll();
+    res.render("admin/invoice", {
+      path: "admin/myInvoice",
+      invoices : invoices,
+    });
+  }
+  
+  
+  exports.downloadInvoice = async (req, res) => {
+    try {
+      const id = req.params.id;
+      const invoice_details = await Invoice.findByPk(id);
+      if (id) {
+        const template = fs.readFileSync("views/pdf/invoice.ejs", "utf-8");
+        const tatalCost =
+          Number(invoice_details.packing_charges) +
+          Number(invoice_details.loading_charges) +
+          Number(invoice_details.unloading_charges) +
+          Number(invoice_details.unpacking_charges);
+        const data = {
+          packing_charges: invoice_details.packing_charges,
+          loading_charges: invoice_details.loading_charges,
+          unloading_charges: invoice_details.unloading_charges,
+          unpacking_charges: invoice_details.unpacking_charges,
+          tableHeadColor: invoice_details.quotation_color,
+          client_name: invoice_details.client_name,
+          createdAt: invoice_details.createdAt,
+          client_mobile: invoice_details.client_mobile,
+          shift_from: invoice_details.shift_from,
+          shift_to: invoice_details.shift_to,
+          shifting_date: invoice_details.shifting_date,
+          token_amt: invoice_details.token_amt,
+          totalCost: tatalCost,
+        };
+        await getPDF.generatePDF(res, template, data , id);
+        return;
+      }
+  
+      res.redirect("/admin/invoice");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+  exports.removeInvoice = async (req, res) => {
+    try {
+      const id = req.params.id;
+    
+      const invoiceDestroyed = await Invoice.destroy({where:{id : id}})
+    
+      res.redirect("/admin/invoice");
+    } catch (error) {
+      console.log(error);
+    }
+    
+    };

@@ -12,7 +12,7 @@ const Services = sequelize.define(
     },
     service_name :{
         type:DataTypes.STRING,
-        allowNull : false
+        allowNull : true
     }
   },
   { paranoid: true, timestamps: true }

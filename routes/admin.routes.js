@@ -6,6 +6,7 @@ const authMiddleware = require("../middleware/auth.middleware")
 
 
 
+
 // Admin Dash Board
 router.get("/" ,  authMiddleware.isAdmin , adminController.getDashboard);
 
@@ -48,5 +49,22 @@ router.get("/services" ,  authMiddleware.isAdmin, adminController.getServices);
 
 router.post("/add-services" ,  authMiddleware.isAdmin, adminController.addServices);
 
+
+// All Quotations 
+
+router.get("/quotation" , authMiddleware.isAdmin , adminController.getAllQuotations)
+
+router.get("/downlaod_quotation/:id" , authMiddleware.isAdmin , adminController.downloadQuotation)
+
+router.get("/remove-quotation/:id" , authMiddleware.isAdmin , adminController.removeQuotation)
+
+
+// All Invoice 
+
+router.get("/invoice" , authMiddleware.isAdmin , adminController.getAllInvoice)
+
+router.get("/downlaod_invoice/:id" , authMiddleware.isAdmin , adminController.downloadInvoice)
+
+router.get("/remove-invoice/:id" , authMiddleware.isAdmin , adminController.removeInvoice)
 
 module.exports = router;

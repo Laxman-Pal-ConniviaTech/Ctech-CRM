@@ -11,11 +11,11 @@ const Invoice = sequelize.define("invoice" , {
     },
     client_name : {
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
     client_mobile : {
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
      quotation_date : {
         type:DataTypes.DATEONLY,
@@ -23,93 +23,93 @@ const Invoice = sequelize.define("invoice" , {
     },
     shift_from : {
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
     shift_to : {
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
     transport_charge : {
         type:DataTypes.STRING,
-        allowNull:false,
+        allowNull:true,
         defaultValue: 0,
     },
     transport_type : {
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
     packing_charges : {
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
     unpacking_charges : {
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
     loading_charges : {
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
     unloading_charges : {
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
     car_charge : {
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
     warehouse_charges : {
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
     st_charges : {
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
     mathadi_charges  : {
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
     insurance_per : {
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
     Insurance_type : {
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
 
     shifting_date : {
         type:DataTypes.DATEONLY,
-        allowNull:false
+        allowNull:true
     },
     token_amt : {
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
     service_charge : {
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
     service_charge_type : {
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
     cgst_per : {
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
     cgst_num : {
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
     sgst_per : {
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
     sgst_num : {
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
     invoice_color:{
         type:DataTypes.STRING,

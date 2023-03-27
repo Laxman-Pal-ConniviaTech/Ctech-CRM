@@ -10,6 +10,10 @@ const bodyParser = require("body-parser");
 const Quotation = require("./models/Quotation")
 const session = require('express-session');
 const Invoice = require("./models/Invoice");
+const MoneyReceipt = require("./models/MoneyReceipt");
+const Logo = require("./models/Logo");
+const BankDetails = require("./models/BankDetails");
+const multer = require("multer");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 
@@ -20,6 +24,17 @@ const store = new SequelizeStore({
   db: sequelize,
 })
 
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'tmp')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + '-' + Math.round(Math.random() * 1E9)+ file.originalname)
+  }
+})
+
+const upload = multer({ storage: storage })
+
 // Global Middlewares
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -29,10 +44,12 @@ app.use(session({
   resave : false,
   saveUninitialized : true,
 }))
+app.use(multer({ storage: storage }).single("logo"))
 
 
 // Static & EJS Stuff
 app.use(express.static(path.join(__dirname , "public")))
+app.use( "/tmp" , express.static(path.join(__dirname , "tmp")))
 app.set("view engine" , "ejs");
 app.set("views" , "views")
 
@@ -40,7 +57,10 @@ app.use((req, res, next) => {
   Customer.findByPk(req.session.custId)
     .then(cust => {
       req.cust = cust;
-      // console.log(user);
+      custName = cust ? cust.name : 'Name'
+      console.log('====================================');
+      console.log(custName);
+      console.log('====================================');
       next();
     })
     .catch(err => console.log(err));
@@ -69,6 +89,12 @@ Customer.hasMany(Quotation);
 Quotation.belongsTo(Customer);
 Customer.hasMany(Invoice);
 Invoice.belongsTo(Customer);
+Customer.hasMany(MoneyReceipt);
+MoneyReceipt.belongsTo(Customer);
+Customer.hasMany(Logo);
+Logo.belongsTo(Customer);
+Customer.hasMany(BankDetails);
+BankDetails.belongsTo(Customer);
 
 // Sequelize Sync
 sequelize
