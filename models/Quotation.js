@@ -105,9 +105,6 @@ const Quotation = sequelize.define("quotation" , {
     service_charge_type : {
         type:DataTypes.STRING,
         allowNull:true
-    },
-    quotation_color:{
-        type:DataTypes.STRING,
     }
 } , { paranoid: true, timestamps: true })
 

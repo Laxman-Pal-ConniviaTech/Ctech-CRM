@@ -110,9 +110,6 @@ const Invoice = sequelize.define("invoice" , {
     sgst_num : {
         type:DataTypes.STRING,
         allowNull:true
-    },
-    invoice_color:{
-        type:DataTypes.STRING,
     }
 } , { paranoid: true, timestamps: true })
 

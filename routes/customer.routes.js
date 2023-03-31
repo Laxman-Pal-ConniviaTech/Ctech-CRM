@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const custController = require("../controllers/customer.controllers");
 const authMiddleware = require("../middleware/auth.middleware");
+const { addQuotationValidation, addInvoiceValidation } = require("../utils/validations");
 
 router.get("/" ,  authMiddleware.isLogin , custController.getDashboard );
 
@@ -11,7 +12,7 @@ router.get("/myQuotations" , authMiddleware.isLogin , custController.getMyQuotat
 
 router.get("/add-quotation" , authMiddleware.isLogin , custController.getAddQuotation)
 
-router.post("/add-quotation" , authMiddleware.isLogin , custController.addQuotation)
+router.post("/add-quotation" , authMiddleware.isLogin  ,addQuotationValidation  , custController.addQuotation)
 
 router.get("/downlaod_quotation/:id" , authMiddleware.isLogin , custController.downloadQuotation)
 
@@ -20,9 +21,9 @@ router.get("/remove-quotation/:id" , authMiddleware.isLogin , custController.rem
 // Invoice
 router.get("/myInvoice",  authMiddleware.isLogin , custController.getMyInvoice );
 
-router.get("/add-invoice" , authMiddleware.isLogin , custController.getAddInvoice)
+router.get("/add-invoice" , authMiddleware.isLogin  , custController.getAddInvoice)
 
-router.post("/add-invoice" , authMiddleware.isLogin , custController.AddInvoice)
+router.post("/add-invoice" , authMiddleware.isLogin , addInvoiceValidation , custController.AddInvoice)
 
 router.get("/downlaod_invoice/:id" , authMiddleware.isLogin , custController.downloadInvoice)
 
@@ -42,9 +43,9 @@ router.get("/remove-receipt/:id" , authMiddleware.isLogin , custController.remov
 
 // Logo
 
-router.get("/logo", authMiddleware.isLogin , custController.getAddLogo);
+router.get("/generalSettings", authMiddleware.isLogin , custController.getGeneralSettings);
 
-router.post("/add-logo" , authMiddleware.isLogin , custController.addLogo)
+router.post("/add-generalSettings" , authMiddleware.isLogin , custController.addGeneralSettings)
 
 
 // Bank Details 

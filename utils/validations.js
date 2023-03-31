@@ -52,5 +52,35 @@ exports.addQuotationValidation = [
     check("gst_type").notEmpty().withMessage("Please Enter GST Type"),
     check("gst_num").notEmpty().withMessage("Please Enter GST Number"),
     check("shifting_date").notEmpty().withMessage("Please Enter Shifting Date").isDate().withMessage("Shifting Date Invalid"),
-    check("token_amt").notEmpty().withMessage("Please Enter Token Money")
+    check("token_amt").notEmpty().withMessage("Please Enter Token Money"),
+    check("service_charge").notEmpty().withMessage("Please Enter Service Charge Percentage"),
+    check("service_charge_type").notEmpty().withMessage("Please Enter Service Charge Type"),
+]
+
+
+exports.addInvoiceValidation = [
+    check("client_name").notEmpty().withMessage("Client Name Cannot be empty"),
+    check("client_mobile").isMobilePhone().withMessage("Phone Number Invalid"),
+    check("shift_from").notEmpty().withMessage("Shifting From Cannot be empty"),
+    check("shift_to").notEmpty().withMessage("Shifting To Cannot be empty"),
+    check("transport_type").notEmpty().withMessage("Please Select Transportation Type"),
+    check("transport_charge").notEmpty().withMessage("Please Enter Transportation Charges"),
+    check("packing_charges").notEmpty().withMessage("Please Enter Packing Charges"),
+    check("unpacking_charges").notEmpty().withMessage("Please Enter Unpacking Charges"),
+    check("loading_charges").notEmpty().withMessage("Please Enter Loading Charges"),
+    check("unloading_charges").notEmpty().withMessage("Please Enter Unloading Charges"),
+    check("car_charge").notEmpty().withMessage("Please Enter Car Transportation inclusive Charges"),
+    check("warehouse_charges").notEmpty().withMessage("Please Enter Warehouse Charges"),
+    check("st_charges").notEmpty().withMessage("Please Enter St. Charges"),
+    check("mathadi_charges").notEmpty().withMessage("Please Enter Mathadi Union & Carpenter Charges"),
+    check("insurance_per").notEmpty().withMessage("Please Enter Insurance Percentage"),
+    check("Insurance_type").notEmpty().withMessage("Please Enter Insurance Type"),
+    check("sgst_per").notEmpty().withMessage("Please Enter SGST Percentage"),
+    check("sgst_num").notEmpty().withMessage("Please Enter SGST Number"),
+    check("cgst_per").notEmpty().withMessage("Please Enter CGST Percentage"),
+    check("cgst_num").notEmpty().withMessage("Please Enter CGST Number"),
+    check("shifting_date").notEmpty().withMessage("Please Enter Shifting Date").isDate().withMessage("Shifting Date Invalid"),
+    check("token_amt").notEmpty().withMessage("Please Enter Token Money"),
+    check("service_charge").notEmpty().withMessage("Please Enter Service Charge Percentage"),
+    check("service_charge_type").notEmpty().withMessage("Please Enter Service Charge Type"),
 ]

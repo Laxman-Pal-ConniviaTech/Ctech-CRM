@@ -2,7 +2,7 @@ const {DataTypes} = require("sequelize")
 
 const sequelize = require("../utils/database")
 
-const Logo = sequelize.define("logo" , {
+const GeneralSetting = sequelize.define("generalSetting" , {
     id:{
         type:DataTypes.INTEGER,
         primaryKey:true,
@@ -12,7 +12,10 @@ const Logo = sequelize.define("logo" , {
     logoPath:{
         type:DataTypes.STRING,
         allowNull:false
+    },
+    color:{
+        type : DataTypes.STRING
     }
 } , { paranoid: true, timestamps: true })
 
-module.exports = Logo;
+module.exports = GeneralSetting;

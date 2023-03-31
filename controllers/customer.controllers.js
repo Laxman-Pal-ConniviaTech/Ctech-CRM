@@ -5,11 +5,25 @@ const getPDF = require("../utils/getPDF");
 const MoneyReceipt = require("../models/MoneyReceipt");
 const puppeteer = require("puppeteer");
 const ejs = require("ejs");
-const Logo = require("../models/Logo");
 const BankDetails = require("../models/BankDetails");
+const GeneralSetting = require("../models/GeneralSetting");
+const { validationResult } = require("express-validator");
+const Domains = require("../models/Domains");
 
-exports.getDashboard = (req, res) => {
-  res.render("customer/dashboard", { path: "/customer/" });
+exports.getDashboard = async (req, res) => {
+
+  const domain = await Domains.count({
+    where: { customerId: req.session.custId },
+  });
+  const quotation = await Quotation.count({
+    where: { customerId: req.session.custId },
+  });
+const invoice = await Invoice.count({
+  where: { customerId: req.session.custId },
+});
+
+
+  res.render("customer/dashboard", { path: "/customer/" , domain , quotation , invoice});
 };
 
 exports.getMyQuotations = async (req, res) => {
@@ -23,12 +37,20 @@ exports.getMyQuotations = async (req, res) => {
 };
 
 exports.getAddQuotation = (req, res) => {
-  res.render("customer/add-quotation", { path: "customer/add-quotation" });
+  res.render("customer/add-quotation", { path: "customer/add-quotation", errors: null });
 };
 
 exports.addQuotation = async (req, res) => {
   // res.send(req.body)
   try {
+
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+      console.log(errors.array());
+      return res.status(422).render("customer/add-quotation", { path: "customer/add-quotation", errors: errors.array()[0].msg });
+    }
+
     const createdQuotation = await req.cust.createQuotation({
       client_name: req.body.client_name,
       client_mobile: req.body.client_mobile,
@@ -52,8 +74,7 @@ exports.addQuotation = async (req, res) => {
       shifting_date: req.body.shifting_date,
       token_amt: req.body.token_amt,
       service_charge: req.body.service_charge,
-      service_charge_type: req.body.service_charge_type,
-      quotation_color: req.body.quotation_color,
+      service_charge_type: req.body.service_charge_type
     });
 
     if (createdQuotation) {
@@ -68,10 +89,10 @@ exports.downloadQuotation = async (req, res) => {
   try {
     const id = req.params.id;
     const quotation_details = await Quotation.findByPk(id);
-    const logo = await Logo.findOne({
+    const settings = await GeneralSetting.findOne({
       where: { customerId: req.session.custId },
     });
-    const logoPath = logo.logoPath;
+    const logoPath = settings.logoPath;
     if (id) {
       const template = fs.readFileSync("views/pdf/quotation.ejs", "utf-8");
       const tatalCost =
@@ -84,7 +105,7 @@ exports.downloadQuotation = async (req, res) => {
         loading_charges: quotation_details.loading_charges,
         unloading_charges: quotation_details.unloading_charges,
         unpacking_charges: quotation_details.unpacking_charges,
-        tableHeadColor: quotation_details.quotation_color,
+        tableHeadColor: settings.color,
         client_name: quotation_details.client_name,
         createdAt: quotation_details.createdAt,
         client_mobile: quotation_details.client_mobile,
@@ -130,12 +151,21 @@ exports.getMyInvoice = async (req, res) => {
 };
 
 exports.getAddInvoice = async (req, res) => {
-  res.render("customer/add-invoice", { path: "customer/add-invoice" });
+  res.render("customer/add-invoice", { path: "customer/add-invoice", errors: null });
 };
 
 exports.AddInvoice = async (req, res) => {
   // res.send(req.body)
   try {
+
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+      console.log(errors.array());
+      return res.status(422).render("customer/add-invoice", { path: "customer/add-invoice", errors: errors.array()[0].msg });
+    }
+
+
     const createdInvoice = await req.cust.createInvoice({
       client_name: req.body.client_name,
       client_mobile: req.body.client_mobile,
@@ -161,7 +191,6 @@ exports.AddInvoice = async (req, res) => {
       cgst_num: req.body.cgst_num,
       sgst_per: req.body.sgst_per,
       sgst_num: req.body.sgst_num,
-      invoice_color: req.body.invoice_color,
     });
 
     if (createdInvoice) {
@@ -176,11 +205,11 @@ exports.downloadInvoice = async (req, res) => {
   try {
     const id = req.params.id;
     const invoice_details = await Invoice.findByPk(id);
-    const logo = await Logo.findOne({
+    const settings = await GeneralSetting.findOne({
       where: { customerId: req.session.custId },
     });
-    const logoPath = logo.logoPath;
-    const bankDetails = await BankDetails.findOne({where : {customerId : req.session.custId}})
+    const logoPath = settings.logoPath;
+    const bankDetails = await BankDetails.findOne({ where: { customerId: req.session.custId } })
     if (id) {
       const template = fs.readFileSync("views/pdf/invoice2.ejs", "utf-8");
       const tatalCost =
@@ -194,7 +223,7 @@ exports.downloadInvoice = async (req, res) => {
         loading_charges: invoice_details.loading_charges,
         unloading_charges: invoice_details.unloading_charges,
         unpacking_charges: invoice_details.unpacking_charges,
-        tableHeadColor: invoice_details.quotation_color,
+        tableHeadColor: settings.color,
         createdAt: invoice_details.createdAt,
         client_mobile: invoice_details.client_mobile,
         shift_from: invoice_details.shift_from,
@@ -209,7 +238,7 @@ exports.downloadInvoice = async (req, res) => {
         cgst_per: invoice_details.cgst_per,
         totalCost: tatalCost,
         logo: `${req.protocol}://${req.headers.host}/${logoPath}`,
-        bankDetails : bankDetails
+        bankDetails: bankDetails
       };
       await getPDF.generatePDF(res, template, data, id);
       return;
@@ -304,7 +333,7 @@ exports.downloadReceipt = async (req, res) => {
     };
 
     const receipt = await MoneyReceipt.findByPk(id);
-    const logo = await Logo.findOne({
+    const logo = await GeneralSetting.findOne({
       where: { customerId: req.session.custId },
     });
     const logoPath = logo.logoPath;
@@ -347,44 +376,59 @@ exports.removeReceipt = async (req, res) => {
 
 // Logo
 
-exports.getAddLogo = async (req, res) => {
-  const logo = await Logo.findOne({
+exports.getGeneralSettings = async (req, res) => {
+  const settings = await GeneralSetting.findOne({
     where: { customerId: req.session.custId },
   });
-  if (!logo) {
-    return res.render("customer/logo", {
+  if (!settings) {
+    return res.render("customer/generalSettings", {
       path: "customer/logo",
       logo: "img/dummyLogo.png",
+      color: "#000000"
     });
   }
-  res.render("customer/logo", { path: "customer/logo", logo: logo.logoPath });
+  res.render("customer/generalSettings", { path: "customer/generalSettings", logo: settings.logoPath, color: settings.color });
 };
 
-exports.addLogo = async (req, res) => {
+exports.addGeneralSettings = async (req, res) => {
   // res.send(req.body);
-  const logo = await Logo.findOne({
+  const settings = await GeneralSetting.findOne({
     where: { customerId: req.session.custId },
   });
 
+
   try {
-    const path = req.file.path;
+    const path = req.file?.path;
+    const color = req.body.color;
 
-    if (logo) {
-      const logoUpdated = await logo.update({
-        logoPath: path,
-      });
+    if (settings) {
 
-      if (logoUpdated) {
-        return res.redirect("/customer/logo");
+      if (path) {
+        const logoUpdated = await settings.update({
+          logoPath: path,
+        });
+        if (logoUpdated) {
+          return res.redirect("/customer/generalSettings");
+        }
+      }
+
+      if (color !== '#000000') {
+        const colorUpdated = await settings.update({
+          color: color
+        });
+        if (colorUpdated) {
+          return res.redirect("/customer/generalSettings");
+        }
       }
     }
 
-    const logoUploaded = await req.cust.createLogo({
+    const SettingsUploaded = await req.cust.createGeneralSetting({
       logoPath: path,
+      color: color
     });
 
-    if (logoUploaded) {
-      res.redirect("/customer/logo");
+    if (SettingsUploaded) {
+      res.redirect("/customer/generalSettings");
     }
   } catch (error) {
     console.log(error);
@@ -395,9 +439,9 @@ exports.addLogo = async (req, res) => {
 
 exports.getBankDetails = async (req, res) => {
 
-    const bankDetails = await BankDetails.findOne({where : {customerId : req.session.custId}})
+  const bankDetails = await BankDetails.findOne({ where: { customerId: req.session.custId } })
 
-  res.render("customer/bankDetails", { path: "customer/bankDetails" , bankDetails : bankDetails });
+  res.render("customer/bankDetails", { path: "customer/bankDetails", bankDetails: bankDetails });
 };
 
 exports.bankDetails = async (req, res) => {
@@ -422,7 +466,7 @@ exports.bankDetails = async (req, res) => {
     }
 
     const bankDetailsAdded = await BankDetails.create({
-      customerId : req.session.custId,
+      customerId: req.session.custId,
       bankName: req.body.bankName,
       accNum: req.body.accNum,
       ifsc: req.body.ifsc,

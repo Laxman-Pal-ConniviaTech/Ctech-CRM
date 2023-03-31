@@ -13,7 +13,7 @@ const {validationResult} = require("express-validator")
 
 exports.getDashboard = async (req, res) => {
   const totalDomains = await Domains.count();
-  const totalCust = await Customer.count();
+  const totalCust = await Customer.count({where : {roleId : 2 }});
 //   const today = new Date();
 // const nextMonth = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 30);
 

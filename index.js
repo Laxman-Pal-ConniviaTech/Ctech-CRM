@@ -11,11 +11,11 @@ const Quotation = require("./models/Quotation")
 const session = require('express-session');
 const Invoice = require("./models/Invoice");
 const MoneyReceipt = require("./models/MoneyReceipt");
-const Logo = require("./models/Logo");
 const BankDetails = require("./models/BankDetails");
 const multer = require("multer");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
-const flash = require("connect-flash")
+const flash = require("connect-flash");
+const GeneralSetting = require("./models/GeneralSetting");
 
 
 const app = express();
@@ -39,7 +39,7 @@ const upload = multer({ storage: storage })
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(session({
-  secret : "hsdgsjdghfsjdfhgsjdfhgsjfhgsjfh",
+  secret : process.env.SESSION_SECRET,
   store : store,
   resave : false,
   saveUninitialized : true,
@@ -58,9 +58,6 @@ app.use((req, res, next) => {
     .then(cust => {
       req.cust = cust;
       custName = cust ? cust.name : 'Name'
-      console.log('====================================');
-      console.log(custName);
-      console.log('====================================');
       next();
     })
     .catch(err => console.log(err));
@@ -91,8 +88,8 @@ Customer.hasMany(Invoice);
 Invoice.belongsTo(Customer);
 Customer.hasMany(MoneyReceipt);
 MoneyReceipt.belongsTo(Customer);
-Customer.hasMany(Logo);
-Logo.belongsTo(Customer);
+Customer.hasMany(GeneralSetting);
+GeneralSetting.belongsTo(Customer);
 Customer.hasMany(BankDetails);
 BankDetails.belongsTo(Customer);
 
