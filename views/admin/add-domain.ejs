@@ -5,6 +5,21 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-12">
+        <% if (errors) { %>
+          <div class=" alert alert-danger  alert-dismissible fade show  mt-4" role="alert">
+            <div class="alert-content">
+              <p> <%= errors %> </p>
+              <button type="button" class="btn-close text-capitalize" data-bs-dismiss="alert" aria-label="Close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="svg replaced-svg">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <% } %>
         <div class="breadcrumb-main">
           <h4 class="text-capitalize breadcrumb-title">Form Layouts</h4>
           <div class="breadcrumb-action justify-content-center flex-wrap">
@@ -32,9 +47,9 @@
             <form action="/admin/add-domain" method="post">
               <div class="row">
                 <div class="col-md-6 mb-25">
-                  <label for="formGroupExampleInput" class="color-dark fs-14 fw-500 align-center mb-10">Customer Name</label>
+                  <label for="formGroupExampleInput" class="color-dark fs-14 fw-500 align-center mb-10">Customer Name<span style="color: red;">*</span></label>
                     <select class="form-control px-15 " id="exampleFormControlSelect1" name="cust_name">
-                    <option value="0" >Select Customer Name</option>
+                    <option value="" >Select Customer Name</option>
                     <% if(customers.length){
                       for(var i = 0; i< customers.length; i++) {%> 
                       <option value="<%= customers[i].id%>">
@@ -44,7 +59,7 @@
                     </select>
                 </div>
                 <div class="col-md-6 mb-25">
-                  <label for="formGroupExampleInput" class="color-dark fs-14 fw-500 align-center mb-10">Domain Name</label>
+                  <label for="formGroupExampleInput" class="color-dark fs-14 fw-500 align-center mb-10">Domain Name<span style="color: red;">*</span></label>
                   <input
                     type="text"
                     name="domain_name"
@@ -53,7 +68,7 @@
                   />
                 </div>
                 <div class="col-md-6 mb-25">
-                    <label for="formGroupExampleInput" class="color-dark fs-14 fw-500 align-center mb-10">Domain Login ID</label>
+                    <label for="formGroupExampleInput" class="color-dark fs-14 fw-500 align-center mb-10">Domain Login ID<span style="color: red;">*</span></label>
                     <input
                       type="text"
                       name="login_id"
@@ -62,7 +77,7 @@
                     />
                   </div>
                   <div class="col-md-6 mb-25">
-                    <label for="formGroupExampleInput" class="color-dark fs-14 fw-500 align-center mb-10">Password</label>
+                    <label for="formGroupExampleInput" class="color-dark fs-14 fw-500 align-center mb-10">Password<span style="color: red;">*</span></label>
                     <div class="position-relative">
                       <input
                         id="password-field"
@@ -77,23 +92,21 @@
                     </div>
                     </div>
                   <div class="col-md-6 mb-25">
-                    <label for="formGroupExampleInput" class="color-dark fs-14 fw-500 align-center mb-10">Registration Date</label>
+                    <label for="formGroupExampleInput" class="color-dark fs-14 fw-500 align-center mb-10">Registration Date<span style="color: red;">*</span></label>
                     <input
-                      type="text"
+                      type="date"
                       name="reg_date"
                       class="form-control ih-medium ip-gray radius-xs b-light px-15"
-                      id="datepicker9"
                       placeholder="Registration Date"
                     />
                   </div>
                   <div class="col-md-6 mb-25">
-                    <label for="formGroupExampleInput" class="color-dark fs-14 fw-500 align-center mb-10">Expire Date</label>
+                    <label for="formGroupExampleInput" class="color-dark fs-14 fw-500 align-center mb-10">Expire Date<span style="color: red;">*</span></label>
                     <div class="position-relative">
                       <input
-                        type="text"
+                        type="date"
                         name="exp_date"
                         class="form-control ih-medium ip-light radius-xs b-light px-15 datepicker"
-                        id="datepicker8"
                         placeholder="Expire Date"
                       />
                     </div>
@@ -108,7 +121,7 @@
                     />
                   </div>
                   <div class="col-md-6 mb-25">
-                    <label for="formGroupExampleInput" class="color-dark fs-14 fw-500 align-center mb-10">Renewal Amount</label>
+                    <label for="formGroupExampleInput" class="color-dark fs-14 fw-500 align-center mb-10">Renewal Amount<span style="color: red;">*</span></label>
                     <input
                       type="number"
                       name="renew_amt"
@@ -117,9 +130,9 @@
                     />
                   </div>
                   <div class="col-md-6 mb-25">
-                    <label for="formGroupExampleInput" class="color-dark fs-14 fw-500 align-center mb-10">Hosting Provider</label>
+                    <label for="formGroupExampleInput" class="color-dark fs-14 fw-500 align-center mb-10">Hosting Provider<span style="color: red;">*</span></label>
                       <select class="form-control px-15 " id="exampleFormControlSelect1" name="hosting_provider">
-                      <option value="0" >Select Hosting Provider</option>
+                      <option value="" >Select Hosting Provider</option>
                       <% if(providers.length){
                         for(var i = 0; i< providers.length; i++) {%> 
                         <option value="<%= providers[i].id%>">
@@ -129,7 +142,7 @@
                       </select>
                   </div>
                   <div class="col-md-6 mb-25">
-                    <label for="formGroupExampleInput" class="color-dark fs-14 fw-500 align-center mb-10">Pin</label>
+                    <label for="formGroupExampleInput" class="color-dark fs-14 fw-500 align-center mb-10">Pin<span style="color: red;">*</span></label>
                     <input
                       type="number"
                       name="pin"
@@ -138,7 +151,7 @@
                     />
                   </div>
                   <div class="col-md-6 mb-25">
-                    <label for="formGroupExampleInput" class="color-dark fs-14 fw-500 align-center mb-10">Domain Booked From</label>
+                    <label for="formGroupExampleInput" class="color-dark fs-14 fw-500 align-center mb-10">Domain Booked From<span style="color: red;">*</span></label>
                     <input
                       type="text"
                       name="book_from"
@@ -147,9 +160,9 @@
                     />
                   </div>
                   <div class="col-md-6 mb-25">
-                    <label for="formGroupExampleInput" class="color-dark fs-14 fw-500 align-center mb-10">Status</label>
+                    <label for="formGroupExampleInput" class="color-dark fs-14 fw-500 align-center mb-10">Status<span style="color: red;">*</span></label>
                       <select class="form-control px-15 " id="exampleFormControlSelect1" name="status">
-                      <option value="0">Status</option>
+                      <option value="">Status</option>
                       <option value="1">Pending</option>
                       <option value="2">Payment Received</option>
                       <option value="3">Free</option>

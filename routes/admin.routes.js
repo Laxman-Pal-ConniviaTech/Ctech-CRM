@@ -4,6 +4,8 @@ const adminController = require("../controllers/admin.controllers");
 const Services = require("../models/Services");
 const authMiddleware = require("../middleware/auth.middleware")
 
+const { addCustomerValidation, addDomainValidation } = require("../utils/validations");
+
 
 
 
@@ -15,7 +17,7 @@ router.get("/customers" ,  authMiddleware.isAdmin, adminController.getCustomer);
 
 router.get("/add-customer"   ,  authMiddleware.isAdmin, adminController.getAddCustomer )
 
-router.post("/add-customer"  ,  authMiddleware.isAdmin, adminController.AddCustomer)
+router.post("/add-customer"  ,  authMiddleware.isAdmin , addCustomerValidation, adminController.AddCustomer)
 
 router.get("/edit-customer/:id"  ,  authMiddleware.isAdmin, adminController.getEditCustomer)
 
@@ -35,7 +37,7 @@ router.get("/add-domain"  ,  authMiddleware.isAdmin, adminController.getAddDomai
 
 router.get("/add-hosting" ,  authMiddleware.isAdmin , adminController.getAddHosting )
 
-router.post("/add-domain",  authMiddleware.isAdmin , adminController.AddDomain);
+router.post("/add-domain",  authMiddleware.isAdmin , addDomainValidation , adminController.AddDomain);
 
 router.post("/add-hosting",  authMiddleware.isAdmin , adminController.AddHosting);
 

@@ -19,7 +19,7 @@
     <title>Document</title>
     <style>
       * {
-        font-size: 10px;
+        font-size: 15px;
         font-family: "Lexend", sans-serif;
       }
       /* .table {
@@ -34,10 +34,10 @@
     </style>
   </head>
   <body>
-    <div class="px-5 mt-5">
+    <div class="px-5 mt-3">
       <img
-        src=""
-        class="img-fluid mb-5"
+        src="<%= logo %>"
+        class="img-fluid mb-3"
         alt="imagename"
         width="100%"
         style="margin-bottom: 10px"
@@ -47,7 +47,7 @@
           <tr>
             <th scope="col">To : <%= client_name %></th>
             <th scope="col">Ref No:- 1388</th>
-            <th scope="col">Date:- <%= createdAt %></th>
+            <th scope="col">Date:- <%= new Date(createdAt).toISOString().replace(/T.*/,'').split('-').reverse().join('-') %></th>
           </tr>
         </thead>
         <tbody>
@@ -161,6 +161,8 @@
         </tbody>
       </table>
       <br />
+      <br>
+      <br>
       <h6>Terms & Conditions</h6>
       <p>
         We do not undertake Electrical, Carpentry & plumber job. We will provide
@@ -198,17 +200,17 @@
       </h6>
       <br />
     </div>
-    <div class="container" style="margin-bottom: 40px">
-      <div class="row">
-        <div class="col-6 col-md-4"><b>Customer Signature</b></div>
-        <div class="col-6 col-md-4" style="text-align: center">
+   
+      <div class="row pt-5 px-5">
+        <div class="col"><b>Customer Signature</b></div>
+        <div class="col" style="text-align: center">
           <b>Powered By Stepinhost.com</b>
         </div>
-        <div class="col-6 col-md-4" style="text-align: right">
+        <div class="col" style="text-align: right">
           <b>Marketing Executive</b>
         </div>
       </div>
-    </div>
+    
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"

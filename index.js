@@ -15,7 +15,7 @@ const Logo = require("./models/Logo");
 const BankDetails = require("./models/BankDetails");
 const multer = require("multer");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
-
+const flash = require("connect-flash")
 
 
 const app = express();
@@ -45,7 +45,7 @@ app.use(session({
   saveUninitialized : true,
 }))
 app.use(multer({ storage: storage }).single("logo"))
-
+app.use(flash())
 
 // Static & EJS Stuff
 app.use(express.static(path.join(__dirname , "public")))

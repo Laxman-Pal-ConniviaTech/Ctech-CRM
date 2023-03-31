@@ -9,6 +9,7 @@ const Quotation = require("../models/Quotation");
 const fs = require("fs");
 const getPDF = require("../utils/getPDF");
 const Invoice = require("../models/Invoice");
+const {validationResult} = require("express-validator")
 
 exports.getDashboard = async (req, res) => {
   const totalDomains = await Domains.count();
@@ -103,11 +104,19 @@ exports.getCustDetails = async (req, res) => {
 };
 
 exports.getAddCustomer = (req, res) => {
-  res.render("admin/add-customer", { path: "admin/add-customer" });
+  res.render("admin/add-customer", { path: "admin/add-customer" , errors : null });
 };
 
 exports.AddCustomer = async (req, res) => {
   try {
+
+    const errors= validationResult(req)
+    
+    if (!errors.isEmpty()) {
+      console.log(errors.array());
+     return  res.status(422).render("admin/add-customer", { path: "admin/add-customer" , errors : errors.array()[0].msg });
+    }
+
     const cust_uniq_id = Math.random().toString(36).slice(2);
     const securePassword = await bcrypt.hash(req.body.password, 12);
     const newCust = await Customer.create({
@@ -214,34 +223,51 @@ exports.getAddDomain = async (req, res) => {
       path: "/admin/add-domain",
       customers: customers,
       providers: providers,
+      errors : null
     });
   } catch (error) {
     console.log(error);
   }
 };
 
-exports.AddDomain = (req, res) => {
-  Domains.create({
-    customerId: req.body.cust_name,
-    status: req.body.status,
-    domain_name: req.body.domain_name,
-    booked_from: req.body.book_from,
-    doamin_mailId: req.body.login_id,
-    domain_password: req.body.password,
-    domain_pin: req.body.pin,
-    registration_Date: req.body.reg_date,
-    expire_date: req.body.exp_date,
-    remark: req.body.remark,
-    domain_amount: req.body.renew_amt,
-    hosting_provider: req.body.hosting_provider,
+exports.AddDomain = async (req, res) => {
+
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    const customers = await Customer.findAll({ where: { ban: 0 } });
+
+    const providers = await HostingProvider.findAll();
+
+   return  res.status(422).render("admin/add-domain", {
+    path: "/admin/add-domain",
+    customers: customers,
+    providers: providers,
+    errors : errors.array()[0].msg ,
   })
-    .then((domain) => {
-      res.redirect("/admin/domains");
-      console.log(domain);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  }
+
+  // Domains.create({
+  //   customerId: req.body.cust_name,
+  //   status: req.body.status,
+  //   domain_name: req.body.domain_name,
+  //   booked_from: req.body.book_from,
+  //   doamin_mailId: req.body.login_id,
+  //   domain_password: req.body.password,
+  //   domain_pin: req.body.pin,
+  //   registration_Date: req.body.reg_date,
+  //   expire_date: req.body.exp_date,
+  //   remark: req.body.remark,
+  //   domain_amount: req.body.renew_amt,
+  //   hosting_provider: req.body.hosting_provider,
+  // })
+  //   .then((domain) => {
+  //     res.redirect("/admin/domains");
+  //     console.log(domain);
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  //   });
 };
 
 

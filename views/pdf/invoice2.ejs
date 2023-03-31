@@ -74,7 +74,7 @@ svg,img {
 	vertical-align: middle;
 }
 section{
-	padding: 50px 0;
+	padding: 15px 0;
 	position: relative;
 	width: 100%;
 	height: 100%;
@@ -123,11 +123,11 @@ section{
 .invoice-container {
 	max-width: 880px;
 	margin: 0 auto;
-	padding: 30px 15px;
+	/* padding: 10px 15px; */
 }
 .content-min-width{
-	background: #12151C;
-	border-radius: 20px 20px 0 0;
+	/* background: #12151C; */
+	/* border-radius: 20px 20px 0 0; */
     padding:100px 50px 100px;
 }
 .logo img {
@@ -227,7 +227,7 @@ section{
 	color: #888888;
 }
 .table-wrapper {
-	padding: 50px 0 20px;
+	padding: 5px 0 10px;
 }
 .invoice-table {
     border-collapse: collapse;
@@ -244,7 +244,7 @@ section{
     color: #888888;
     font-size: 14px;
 	line-height: 22px;
-	padding: 15px 0;
+	padding: 9px 0;
 }
 .invoice-table thead th {
     color: #12151C;
@@ -316,7 +316,7 @@ section{
 	padding-left: 70px!important;
 }
 .invo-total-table .tax-row td, .invo-grand-total td {
-	padding: 20px 0;
+	padding: 10px 0;
 }
 
 /************************* 4.Bottom Content CSS **************************/
@@ -426,7 +426,7 @@ section{
 .invoice-header.back-img-invoice {
 	content: '';
 	position: relative;
-	background-image: url('../images/header/back-img-one.png');
+	background-image: url('<%= logo %>');
 	width: 100%;
     height: auto;
     top: 0;
@@ -440,7 +440,7 @@ section{
 .invoice-header.back-img-invoice:before, .invoice-header.stadium-header:before {
     content: '';
     position: absolute;
-    background-color: #12151C;
+    /* background-color: #12151C; */
     opacity: 0.8;
     width: 100%;
     height: 100%;
@@ -483,10 +483,10 @@ section{
 	border-bottom: 1px solid #888888;
 }
 .pay-type {
-	padding: 20px 20px 20px 0px;
+	padding: 0px 0px 0px 0px;
 }
 .refund-days {
-	padding: 20px 0 20px 0px;
+	padding: 00px 0 0px 0px;
 }
 .res-pay-table tbody .pay-data:last-child {
 	border-bottom: none;
@@ -1015,7 +1015,33 @@ section{
 						<div class="invo-addition-wrap">
 							<div class="invo-add-info-content">
 								<h3 class="addi-info-title inter-700 medium-font">Additional Information:</h3>
-								<p class="add-info-desc inter-400 mtb-0">A ut vitae nullam risus at. Justo enim nisi elementum ac. Massa molestie metus vitae ornare turpis donec odio sollicitudin. Ac ut tellus eu donec dictum risus blandit. Quam diam dictum amet.</p>
+								<!-- <p class="add-info-desc inter-400 mtb-0">A ut vitae nullam risus at. Justo enim nisi elementum ac. Massa molestie metus vitae ornare turpis donec odio sollicitudin. Ac ut tellus eu donec dictum risus blandit. Quam diam dictum amet.</p> -->
+								<div class="payment-wrap">
+									<table class="res-pay-table">
+										<tbody>
+										  <tr class="pay-data">
+											<td class="pay-type inter-700 medium-font b-text">Acc Num :</td>
+											<td class="refund-days inter-400 second-color"><%= bankDetails.accNum %></td>
+										  </tr>
+										  <tr class="pay-data">
+											<td class="pay-type inter-700 medium-font b-text">IFSC Code:</td>
+											<td class="refund-days inter-400 second-color"><%= bankDetails.ifsc %></td>
+										  </tr>
+										  <tr class="pay-data">
+											<td class="pay-type inter-700 medium-font b-text">Paytm:</td>
+											<td class="refund-days inter-400 second-color"><%= bankDetails.paytm %></td>
+										  </tr>
+										  <tr class="pay-data">
+											<td class="pay-type inter-700 medium-font b-text">GooglePay:</td>
+											<td class="refund-days inter-400 second-color"><%= bankDetails.gPay %></td>
+										  </tr>
+										  <tr class="pay-data">
+											<td class="pay-type inter-700 medium-font b-text">PhonePay:</td>
+											<td class="refund-days inter-400 second-color"><%= bankDetails.phonePay %></td>
+										  </tr>
+										</tbody>
+									  </table>
+								</div>
 							</div>
 							<div class="invo-bill-total">
 								<table class="invo-total-table">
@@ -1049,7 +1075,7 @@ section{
 						<!--Payment detail table start here -->
 						<div class="rest-payment-bill">
 							<div class="payment-wrap">
-								<table class="res-pay-table">
+								<!-- <table class="res-pay-table">
 								    <tbody>
 								      <tr class="pay-data">
 								        <td class="pay-type inter-700 medium-font b-text">Acc Num :</td>
@@ -1072,7 +1098,7 @@ section{
 								        <td class="refund-days inter-400 second-color"><%= bankDetails.phonePay %></td>
 								      </tr>
 								    </tbody>
-  								</table>
+  								</table> -->
 							</div>
 							<!-- <div class="signature-wrap">
 								<div class="sign-img">
