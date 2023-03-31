@@ -98,12 +98,14 @@ sequelize
   .sync()
   .then((result) => {
     console.log("💻 DB Connected");
-    app.listen(port, () => {
-      console.log("====================================");
-      console.log(`Server running on port ${port} 🔥`);
-      console.log("====================================");
-    });
+
   })
   .catch((error) => {
     console.log("Error syncing table:", error);
+  });
+
+  app.listen(port, () => {
+    console.log("====================================");
+    console.log(`Server running on port ${port} 🔥`);
+    console.log("====================================");
   });
