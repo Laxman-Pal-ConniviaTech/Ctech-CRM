@@ -45,6 +45,7 @@ const domains = await Domains.findAll({
   ]
 })
 
+const expiredDomain = await Domains.count({where : {expire_date : {[Op.gte] : new Date()}}})
 
 const hostings = await Hostings.findAll({
   where: {
@@ -79,7 +80,8 @@ const hostings = await Hostings.findAll({
     totalDomains: totalDomains,
     totalCust: totalCust,
     domains : domains,
-    hostings : hostings
+    hostings : hostings,
+    expiredDomain : expiredDomain
   });
 };
 

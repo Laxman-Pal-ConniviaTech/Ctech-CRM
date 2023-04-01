@@ -14,8 +14,9 @@ const MoneyReceipt = require("./models/MoneyReceipt");
 const BankDetails = require("./models/BankDetails");
 const multer = require("multer");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
-const flash = require("connect-flash");
 const GeneralSetting = require("./models/GeneralSetting");
+const helmet = require("helmet");
+const compression = require("compression")
 
 
 const app = express();
@@ -45,7 +46,8 @@ app.use(session({
   saveUninitialized : true,
 }))
 app.use(multer({ storage: storage }).single("logo"))
-app.use(flash())
+app.use(helmet())
+app.use(compression())
 
 // Static & EJS Stuff
 app.use(express.static(path.join(__dirname , "public")))
@@ -68,14 +70,11 @@ app.use((req, res, next) => {
 app.use("/admin" , require("./routes/admin.routes"))
 app.use(require("./routes/auth.routes"));
 app.use("/customer" , require("./routes/customer.routes"))
+app.use((req , res)=>{
+    res.render("auth/404" , {path : '404'})
+})
 
 const port = process.env.PORT || 5000;
-
-
-// app.use((req , res ,  next )=>{
-
-//   next();
-// })
 
 // Relations
 Customer.hasMany(Domains);
@@ -98,14 +97,13 @@ sequelize
   .sync()
   .then((result) => {
     console.log("💻 DB Connected");
-
-  })
-  .catch((error) => {
-    console.log("Error syncing table:", error);
-  });
-
   app.listen(port, () => {
     console.log("====================================");
     console.log(`Server running on port ${port} 🔥`);
     console.log("====================================");
   });
+  })
+  .catch((error) => {
+    console.log("Error syncing table:", error);
+  });
+

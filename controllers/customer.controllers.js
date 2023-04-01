@@ -9,6 +9,7 @@ const BankDetails = require("../models/BankDetails");
 const GeneralSetting = require("../models/GeneralSetting");
 const { validationResult } = require("express-validator");
 const Domains = require("../models/Domains");
+const { Op } = require("sequelize");
 
 exports.getDashboard = async (req, res) => {
 
@@ -22,8 +23,10 @@ const invoice = await Invoice.count({
   where: { customerId: req.session.custId },
 });
 
+const expiredDomain = await Domains.count({where : {customerId : req.session.custId  , expire_date : {[Op.gte] : new Date()}}})
 
-  res.render("customer/dashboard", { path: "/customer/" , domain , quotation , invoice});
+
+  res.render("customer/dashboard", { path: "/customer/" , domain , quotation , invoice ,     expiredDomain});
 };
 
 exports.getMyQuotations = async (req, res) => {
